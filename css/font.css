@@ -1,0 +1,11 @@
+@font-face {  
+    font-family: 'zhiyong';  
+    src: url('./zhiyong.ttf'); 
+    font-style: normal;  
+}
+
+@font-face {  
+    font-family: 'muyao';  
+    src: url('./muyao.ttf'); 
+    font-style: normal;  
+}

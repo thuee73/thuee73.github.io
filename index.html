@@ -1,0 +1,480 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+    <title>Element Plus demo</title>
+  </head>
+  <body>
+    <div id="app">
+
+      <div id="wrapper">
+        <div id="container" >
+            <div style="display: flex; align-items: center;" class="wholebox">
+              <div style="font-size:40px;font-family: 'zhiyong';display: flex;width:40px;position: relative; color: black;" v-show="screenwidth>700" class="word1"
+                :style="{left: (curpage == 0)*22 - (curpage>0)*5 +'vw'}"
+                ><div style="margin-right:10px;">山水总相逢</div><div>未来皆可期</div></div>
+              <div style="position: relative; right:20px; border:50%;"  @click="pageminus" class="iii1">
+                <i :class="screenwidth>700?'el-icon-d-arrow-left':'el-icon-arrow-up'" style="font-size:80px;" class="iii"></i>
+              </div>
+              <section class="open-book" >
+              
+              <div class="photobox" style="width:100%;height:100%;position: relative;display: flex;" > 
+                <div class="photobox_left" style="height:100%;width:50%;">
+                  <el-image 
+                  style="width:calc(100% + 2em);height:20%;position: relative;margin:-2em;"
+                  class="youthimg"
+                  src="./youth.jpg"
+                  fit="cover"></el-image>
+
+                  <div v-for="piece in pageones" style="width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0">
+                    <!-- border: 1px solid; -->
+                    <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
+                    <el-image
+                    style="height: 90%;width: 35%; position: relative;"
+                    v-bind:style="{order:(piece-1)%2, }"
+                    :src="somedata[(curpage-1)*pagesize+piece-1].url"
+                    fit="cover"></el-image>
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
+                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '24px') +'!important', }"
+                    >
+                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
+                      <br/>
+                      <span>{{somedata[(curpage-1)*pagesize+piece-1].des}}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="photobox_right" style="height:100%;width:50%;">
+                  <el-image 
+                  style="width:calc(100% + 2em);height:20%;position: relative;margin:-2em;left:2em;"
+                  class="youthimg"
+                  src="./youth.jpg"
+                  fit="cover"></el-image>
+                  <div v-for="piece in pageones" style="position: relative;left:5%;width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0">
+                    <!-- border: 1px solid; -->
+                    <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
+                    
+                    <el-image
+                    style="height: 90%;width: 35%; position: relative;"
+                    v-bind:style="{order:(piece-1+pageones)%2,}"
+                    :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
+                    fit="cover"></el-image>
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
+                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '24px'), }"
+                    >
+                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
+                      <br/>
+                      <span>{{somedata[(curpage-1)*pagesize+piece-1+pageones].des}}</span>
+                      
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div style="position: relative; left:20px; border:50%;"  @click="pageadd" class="iii2">
+              <i :class="screenwidth>700?'el-icon-d-arrow-right':'el-icon-arrow-down'" style="font-size:80px;" class="iii"></i>
+            </div>
+            <div style="font-size:40px;font-family: 'zhiyong';display: flex;width:40px;position: relative; color: black;" v-show="screenwidth>700" class="word2"
+              :style="{right: (curpage == 0)*24 - (curpage>0)*2 +'vw'}"
+              ><div style="margin-left:10px;">曲终人未散</div><div>人散曲未终</div></div>
+            
+            </div>
+
+            <el-pagination
+              class="pageclip"
+              layout="prev, pager, next"
+              :page-size="pagesize"
+              @current-change="handleCurrentChange"
+              v-model:currentPage="curpage"
+              :total="totalsize">
+            </el-pagination>
+           
+        </div>
+        </div>
+    </div>
+    <script>
+      
+      const App = {
+        data() {
+          return {
+            screenwidth:'1080px',
+            pagesize:6,
+            pageones:3,
+            totalsize:12,
+            curpage:0,
+            datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
+            des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
+            somedata:[
+              {
+                'name':'曾睿',
+                'url':'./photo/zengrui.jpg',
+                'des':'祝大家前程似锦，都有光明的未来。以后都带带我呀。',
+              },
+              {
+                'name':'商宇',
+                'url':'./photo/shangyu.jpg',
+                'des':'永远年轻，永远热泪盈眶',
+              },
+              {
+                'name':'敖文轩',
+                'url':'./photo/aowenxuan.jpg',
+                'fontsize':'2vh',
+                'des':'毕业快乐！这四年的时光中，无论是班会、主题团日、聚餐，还是做找车机、共享币站、拍DV剧，各种大大小小的活动总是让我有一种集体的认同与归属感，也留下了许多美好的回忆。我非常幸运能够在无73班认识这样一群优秀、热情、充满活力的同学们。在离别之际，祝大家都能找到自己所热爱的事业，前程似锦！',
+              },
+              {
+                'name':'阿尔斯·阿力哈',
+                'url':'./photo/aersi.jpg',
+                'des':'祝大家前程似锦，平安喜乐！',
+              },
+              {
+                'name':'董浩林',
+                'url':'./photo/donghaolin.jpg',
+                'des':'祝大家毕业快乐！',
+              },
+              {
+                'name':'李念',
+                'url':'./photo/linian.jpg',
+                'des':'祝大家今后能够生活愉快，工作顺利。',
+              },
+              {
+                'name':'宋柯楠',
+                'url':'./photo/songkenan.jpg',
+                'des':'要开开心心万事顺意哦～',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+              {
+                'name':'',
+                'url':'',
+                'des':'',
+              },
+            ]
+          };
+        },
+        created:function()
+        {
+          this.init();
+          this.screenwidth=window.innerWidth;
+            console.log(this.screenwidth)
+          if(this.screenwidth<700)
+          {
+            this.pagesize=3;
+            this.curpage=1;
+          }
+          else this.pagesize=6;
+        },
+        mounted () {
+
+        window.onresize = () => {
+          this.screenwidth=window.innerWidth;
+            console.log(this.screenwidth)
+          }
+          if(this.screenwidth<700)
+          {
+            this.pagesize=3;
+          }
+          else this.pagesize=6;
+        },
+
+        methods:{
+          init()
+          {
+              this.totalsize=this.somedata.length;
+              console.log(this.totalsize);
+          },
+          handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+            this.curpage=val;
+          },
+          pageadd()
+          {
+            if(this.curpage<Math.ceil(this.totalsize/this.pagesize))
+            {
+              this.curpage++;
+            }
+            console.log(this.curpage);
+          },
+          pageminus()
+          {
+            if(this.screenwidth<700)
+            {
+              if(this.curpage>1)
+              {
+                this.curpage--;
+              }
+            }
+            else
+            {
+              if(this.curpage>0)
+              {
+                this.curpage--;
+              }
+            }
+            
+            console.log(this.curpage);
+          }
+        }
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
+    </script>
+  </body>
+</html>
+
+
+
+<style>
+.word1
+{
+  z-index:10;
+  transition:left 2s;
+}
+.word2
+{
+  z-index:10;
+  transition:right 2s;
+}
+
+
+html,body
+{
+  height:100%;
+  width:100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.iii1,.iii2
+{
+  z-index:20;
+}
+
+#app
+{
+  /* background: #DBD2B7; */
+  height:100%;
+  width:100%;
+}
+.el-carousel__container
+{
+  height:90%;
+}
+.pageclip
+{
+  position: relative;
+  width: 100%;
+  text-align: center;
+  top: 20vh;
+}
+
+
+body {
+    background-color:#DBD2B7;
+    /* #1d1f20; */
+    color: #e5e5e5;
+    font: 16px/1.25 'Crimson Text', sans-serif;
+    margin: 0;
+}
+
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90em;
+}
+
+#container {
+    float: left;
+    padding: 1em;
+    width: 100%;
+    
+}
+
+
+/*** OPEN BOOK ***/
+.open-book {
+    /* background: #F4E8CF; */
+    background-color: #F6E7CF;
+    box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
+    color: #000;
+    padding: 2em;
+    height:80vh;
+    position: relative;
+    top:2vh;
+}
+
+.open-book * {
+    position: relative;
+}
+
+/*** MEDIA QUERIES ***/
+@media only screen and ( min-width: 50em ) {
+
+    .open-book {
+        margin: 1em;
+        position: relative;
+    }
+
+    .open-book:before {
+        background-color: #8B4513;
+        border-radius: 0.25em;
+        bottom: -1em;
+        content: '';
+        left: -1em;
+        position: absolute;
+        right: -1em;
+        top: -1em;
+        z-index: -1;
+    }
+
+    .open-book:after {
+        background: linear-gradient(to right, transparent 0%,rgba(0,0,0,0.2) 46%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.5) 51%,rgba(0,0,0,0.2) 52%,transparent 100%);
+        bottom: -1em;
+        content: '';
+        left: 50%;
+        position: absolute;
+        top: -1em;
+        transform: translate(-50%,0);
+        width: 4em;
+        z-index: 1;
+    }
+
+
+}
+
+
+@media (max-width: 700px) {
+  .wholebox
+  {
+    flex-direction: column;
+  }
+  #container
+  {
+    padding: 0;
+  }
+  .iii
+  {
+    font-size:40px !important;
+  }
+  .iii1
+  {
+    right:0 !important;
+    width: 100vw;
+    text-align: center;
+    height: calc(10vh - 2em);
+  }
+  .iii2
+  {
+    left:0 !important;
+    top: 0vh !important;
+    width: 100vw;
+    text-align: center;
+    height: calc(10vh - 2em);
+  }
+  .open-book
+  {
+    top:0;
+  }
+  .photobox_left
+  {
+    width:100% !important;
+  }
+  .photobox_right
+  {
+    display: none;
+  }
+  .ppp
+  {
+    font-size: 5vw !important;
+  }
+  .word1,.word2
+  {
+    display: none !important;
+  }
+  .youthimg
+  {
+    width:calc(100% + 4em) !important;
+  }
+}
+
+
+
+</style>
