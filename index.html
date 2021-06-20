@@ -53,11 +53,11 @@
                     </p>
                   </div>
 
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*2-1)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp)*2-1)+'.jpg'"
-                    :preview-src-list="['./scan/'+((curpage-pagetmp)*2-1)+'.jpg']"
+                    :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg']"
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -88,11 +88,11 @@
                       
                     </p>
                   </div>
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*2)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp)*2)+'.jpg'"
-                    :preview-src-list="['./scan/'+((curpage-pagetmp)*2)+'.jpg']"
+                    :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp)*rewardones)+'.jpg']"
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -130,6 +130,7 @@
             totalsize:12,
             pagetmp:4,
             reward:7,
+            rewardones:2,
             curpage:0,
             datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
             des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
@@ -178,6 +179,7 @@
               {
                 'name':'曾锦薇',
                 'url':'./photo/zengjinwei.jpg',
+                'fontsize':'2.5vh',
                 'des':'希望我们73这个优秀的班集体里的每个同学都能行你所行，爱你所爱。我们未来常相聚～',
               },
               {
@@ -255,15 +257,18 @@
         },
         created:function()
         {
-          this.init();
+          
           this.screenwidth=window.innerWidth;
             console.log(this.screenwidth)
           if(this.screenwidth<700)
           {
             this.pagesize=3;
+            this.rewardones=1;
             this.curpage=1;
+            this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
           }
           else this.pagesize=6;
+          this.init();
         },
         mounted () {
 
@@ -274,6 +279,8 @@
           if(this.screenwidth<700)
           {
             this.pagesize=3;
+            this.rewardones=1;
+            this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
           }
           else this.pagesize=6;
         },
@@ -292,7 +299,7 @@
           },
           pageadd()
           {
-            if(this.curpage<this.pagetmp+Math.ceil(this.reward/2))
+            if(this.curpage<this.pagetmp+Math.ceil(this.reward/this.rewardones))
             {
               this.curpage++;
             }
