@@ -33,21 +33,32 @@
                   src="./youth.jpg"
                   fit="cover"></el-image>
 
-                  <div v-for="piece in pageones" style="width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0">
+                  <div v-for="piece in pageones" style="width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0 && curpage<=pagetmp ">
                     <!-- border: 1px solid; -->
                     <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1)%2, }"
                     :src="somedata[(curpage-1)*pagesize+piece-1].url"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize"
+                    :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize"
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '24px') +'!important', }"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
                       <br/>
                       <span>{{somedata[(curpage-1)*pagesize+piece-1].des}}</span>
                     </p>
+                  </div>
+
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*2-1)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                    <el-image
+                    style="height: 100%;width: 100%; position: relative;top:5%;"
+                    :src="'./scan/'+((curpage-pagetmp)*2-1)+'.jpg'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp)*2-1)+'.jpg']"
+                    fit="contain"></el-image>
                   </div>
                 </div>
                 <div class="photobox_right" style="height:100%;width:50%;">
@@ -56,23 +67,33 @@
                   class="youthimg"
                   src="./youth.jpg"
                   fit="cover"></el-image>
-                  <div v-for="piece in pageones" style="position: relative;left:5%;width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0">
+                  <div v-for="piece in pageones" style="position: relative;left:5%;width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0 && curpage<=pagetmp">
                     <!-- border: 1px solid; -->
                     <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
                     
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1+pageones)%2,}"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
+                    :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '24px'), }"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
                       <br/>
                       <span>{{somedata[(curpage-1)*pagesize+piece-1+pageones].des}}</span>
                       
                     </p>
+                  </div>
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*2)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                    <el-image
+                    style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
+                    :src="'./scan/'+((curpage-pagetmp)*2)+'.jpg'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp)*2)+'.jpg']"
+                    fit="contain"></el-image>
                   </div>
                 </div>
               </div>
@@ -107,6 +128,8 @@
             pagesize:6,
             pageones:3,
             totalsize:12,
+            pagetmp:4,
+            reward:7,
             curpage:0,
             datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
             des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
@@ -158,14 +181,14 @@
                 'des':'希望我们73这个优秀的班集体里的每个同学都能行你所行，爱你所爱。我们未来常相聚～',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'陈远哲',
+                'url':'./photo/chenyuanzhe.jpg',
+                'des':'后会有柒，江湖再见！',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'周相鑫',
+                'url':'./photo/zhouxiangxin.jpg',
+                'des':'祝大家前程似锦',
               },
               {
                 'name':'',
@@ -259,7 +282,9 @@
           init()
           {
               this.totalsize=this.somedata.length;
+              this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
               console.log(this.totalsize);
+              console.log(this.pagetmp);
           },
           handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
@@ -267,7 +292,7 @@
           },
           pageadd()
           {
-            if(this.curpage<Math.ceil(this.totalsize/this.pagesize))
+            if(this.curpage<this.pagetmp+Math.ceil(this.reward/2))
             {
               this.curpage++;
             }
@@ -304,6 +329,14 @@
 
 
 <style>
+.el-image-viewer__wrapper
+{
+  position: fixed !important;
+}
+.el-image-viewer__mask,.el-image-viewer__btn
+{
+  position: absolute !important;
+}
 .word1
 {
   z-index:10;
