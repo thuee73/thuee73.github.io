@@ -43,9 +43,9 @@
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize"
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
                     fit="cover"></el-image>
-                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:3vh;" class="ppp"
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize"
-                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '24px') +'!important', }"
+                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '3vh') +'!important', }"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
                       <br/>
@@ -78,8 +78,8 @@
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
-                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:24px;" class="ppp"
-                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '24px'), }"
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:3vh;" class="ppp"
+                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '3vh'), }"
                     v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
@@ -148,8 +148,9 @@
               {
                 'name':'敖文轩',
                 'url':'./photo/aowenxuan.jpg',
-                'fontsize':'2vh',
-                'des':'毕业快乐！这四年的时光中，无论是班会、主题团日、聚餐，还是做找车机、共享币站、拍DV剧，各种大大小小的活动总是让我有一种集体的认同与归属感，也留下了许多美好的回忆。我非常幸运能够在无73班认识这样一群优秀、热情、充满活力的同学们。在离别之际，祝大家都能找到自己所热爱的事业，前程似锦！',
+                // 'fontsize':'2vh',
+                'des':'毕业快乐！祝大家都能找到自己所热爱的事业，前程似锦！',
+                // 'des':'毕业快乐！这四年的时光中，无论是班会、主题团日、聚餐，还是做找车机、共享币站、拍DV剧，各种大大小小的活动总是让我有一种集体的认同与归属感，也留下了许多美好的回忆。我非常幸运能够在无73班认识这样一群优秀、热情、充满活力的同学们。在离别之际，祝大家都能找到自己所热爱的事业，前程似锦！',
               },
               {
                 'name':'阿尔斯·阿力哈',
@@ -179,7 +180,7 @@
               {
                 'name':'曾锦薇',
                 'url':'./photo/zengjinwei.jpg',
-                'fontsize':'2.5vh',
+                'fontsize':'3vh',
                 'des':'希望我们73这个优秀的班集体里的每个同学都能行你所行，爱你所爱。我们未来常相聚～',
               },
               {
@@ -193,14 +194,14 @@
                 'des':'祝大家前程似锦',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'王传瑞',
+                'url':'./photo/wangchuanrui.jpg',
+                'des':'祝73班的大家毕业快乐，前程似锦！',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'钟浩',
+                'url':'./photo/zhonghao.jpg',
+                'des':'祝大家前程似锦，心想事成，不忘初心，牢记使命！',
               },
               {
                 'name':'',
@@ -354,6 +355,16 @@
   z-index:10;
   transition:right 2s;
 }
+.word1 div,.word2 div
+{
+  background: #12c2e9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  -webkit-background-clip: text;
+  color: transparent;
+}
 
 
 html,body
@@ -504,7 +515,7 @@ body {
   }
   .ppp
   {
-    font-size: 5vw !important;
+    font-size: 3vh !important;
   }
   .word1,.word2
   {
