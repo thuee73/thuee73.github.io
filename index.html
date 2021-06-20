@@ -38,10 +38,12 @@
                     <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
-                    v-bind:style="{order:(piece-1)%2, }"
+                    v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1].pos : '50% 50%'), }"
                     :src="somedata[(curpage-1)*pagesize+piece-1].url"
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize"
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
+                    hide-on-click-modal=true
+                    object-position="right"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize"
@@ -58,6 +60,7 @@
                     style="height: 100%;width: 100%; position: relative;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg']"
+                    hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -73,9 +76,10 @@
                     
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
-                    v-bind:style="{order:(piece-1+pageones)%2,}"
+                    v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
                     v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
+                    hide-on-click-modal=true
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
@@ -93,6 +97,7 @@
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp)*rewardones)+'.jpg']"
+                    hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -182,6 +187,7 @@
                 'url':'./photo/zengjinwei.jpg',
                 'fontsize':'2.5vh',
                 'des':'希望我们73这个优秀的班集体里的每个同学都能行你所行，爱你所爱。我们未来常相聚～',
+                'pos':'left bottom',
               },
               {
                 'name':'陈远哲',
@@ -225,24 +231,27 @@
                 'des':'毕业快乐，各放光彩',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'高帆',
+                'url':'./photo/gaofan.jpg',
+                'des':'前路漫漫，未来可期。愿永葆冠军的心，披荆斩棘。',
+                'pos':'right',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'张云柯',
+                'url':'./photo/zhangyunke.jpg',
+                'des':'很荣幸在这个优秀的集体度过四年，感谢同学们的帮助与鼓励。祝福各位前程似锦，喜乐安康！',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'闫雯荻',
+                'url':'./photo/yanwendi.jpg',
+                'des':'时间带不走我们最为真挚的回忆',
+                'pos':'right',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'邱楷中',
+                'url':'./photo/qiukaizhong.jpg',
+                'des':'很幸运能够跟大家一起度过四年，毕业快乐！',
+                'pos':'right',
               },
               {
                 'name':'',
@@ -261,7 +270,7 @@
         {
           
           this.screenwidth=window.innerWidth;
-            console.log(this.screenwidth)
+          console.log(this.screenwidth)
           if(this.screenwidth<700)
           {
             this.pagesize=3;
@@ -269,22 +278,34 @@
             this.curpage=1;
             this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
           }
-          else this.pagesize=6;
+          else 
+          {
+            this.pagesize=6;
+            this.rewardones=2;
+            this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+          }
           this.init();
         },
         mounted () {
-
-        window.onresize = () => {
-          this.screenwidth=window.innerWidth;
-            console.log(this.screenwidth)
-          }
-          if(this.screenwidth<700)
-          {
-            this.pagesize=3;
-            this.rewardones=1;
-            this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
-          }
-          else this.pagesize=6;
+          window.onresize = () => {
+            this.screenwidth=window.innerWidth;
+              console.log(this.screenwidth);
+              if(this.screenwidth<700)
+              {
+                this.pagesize=3;
+                this.rewardones=1;
+                this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+                if(this.curpage==0)this.curpage=1;
+              }
+              
+              else 
+              {
+                this.pagesize=6;
+                this.rewardones=2;
+                this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+              }
+              console.log(this.curpage)
+          }  
         },
 
         methods:{
@@ -338,6 +359,10 @@
 
 
 <style>
+.el-image-viewer__canvas
+{
+  position: static !important;
+}
 .el-image-viewer__wrapper
 {
   position: fixed !important;
@@ -359,15 +384,16 @@
 .word1 div,.word2 div
 {
   background: #12c2e9;  /* fallback for old browsers */
-background: -webkit-linear-gradient(135deg, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(135deg, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+  background: -webkit-linear-gradient(135deg, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(135deg, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   color: transparent;
 }
 
-
+img
+{
+  object-position: inherit;
+}
 html,body
 {
   height:100%;
@@ -383,7 +409,6 @@ html,body
 
 #app
 {
-  /* background: #DBD2B7; */
   height:100%;
   width:100%;
 }
@@ -402,7 +427,6 @@ html,body
 
 body {
     background-color:#DBD2B7;
-    /* #1d1f20; */
     color: #e5e5e5;
     font: 16px/1.25 'Crimson Text', sans-serif;
     margin: 0;
@@ -424,7 +448,6 @@ body {
 
 /*** OPEN BOOK ***/
 .open-book {
-    /* background: #F4E8CF; */
     background-color: #F6E7CF;
     box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
     color: #000;
