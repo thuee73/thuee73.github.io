@@ -11,6 +11,7 @@
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js" integrity="sha512-xsoiisGNT6Dw2Le1Cocn5305Uje1pOYeSzrpO3RD9K+JTpVH9KqSXksXqur8cobTEKJcFz0COYq4723mzo88/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <title>无所不为73分队</title>
   </head>
   <body>
@@ -38,75 +39,107 @@
                   src="./youth.jpg"
                   fit="cover"></el-image>
 
-                  <div v-for="piece in pageones" style="width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0 && curpage<=pagetmp ">
+                  <div v-for="piece in pageones" style="width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>specialtmp && curpage<=pagetmp+specialtmp ">
                     <!-- border: 1px solid; -->
                     <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
-                    v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1].pos : '50% 50%'), }"
-                    :src="somedata[(curpage-1)*pagesize+piece-1].url+'?imageMogr2/auto-orient'"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize "
-                    :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
+                    v-if="((curpage-1-specialtmp)*pagesize+piece-1) < totalsize "
+                    v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1-specialtmp)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1-specialtmp)*pagesize+piece-1].pos : '50% 50%'), }"
+                    :src="somedata[(curpage-1-specialtmp)*pagesize+piece-1].url+'?imageMogr2/auto-orient'"
+                    
+                    :preview-src-list="[somedata[(curpage-1-specialtmp)*pagesize+piece-1].url]"
                     :hide-on-click-modal=true
                     object-position="right"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize "
-                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '2.5vh') +'!important', }"
+                    v-if="((curpage-1-specialtmp)*pagesize+piece-1) < totalsize "
+                    :style="{ fontSize:(somedata[(curpage-1-specialtmp)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1-specialtmp)*pagesize+piece-1].fontsize : '2.5vh') +'!important', }"
                     >
-                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
+                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1-specialtmp)*pagesize+piece-1].name}}</span>
                       <br/>
-                      <span>{{somedata[(curpage-1)*pagesize+piece-1].des}}</span>
+                      <span>{{somedata[(curpage-1-specialtmp)*pagesize+piece-1].des}}</span>
                     </p>
                   </div>
 
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp+specialtmp && ((curpage-pagetmp-1-specialtmp)*rewardones+1)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg?imageMogr2/auto-orient'"
-                    :preview-src-list="['./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg']"
+                    :src="'./scan/'+((curpage-pagetmp-1-specialtmp)*rewardones+1)+'.jpg?imageMogr2/auto-orient'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp-1-specialtmp)*rewardones+1)+'.jpg']"
                     :hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
+
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones)<special" style="width:95%;height:80%;display: flex;align-items: center;justify-content: center; flex-direction: column;">
+                    <el-image
+                    style="height: 40%;width: 40%; position: relative;"
+                    :src="sdata[((curpage-1)*rewardones)].url"
+                    :preview-src-list="[sdata[((curpage-1)*rewardones)].url]"
+                    :hide-on-click-modal=true
+                    fit="contain"></el-image>
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp">
+                      <span style="width:100%;margin-bottom:10px;display: inline-block; text-align: center;">{{sdata[((curpage-1)*rewardones)].name}}</span>
+                      <br/>
+                      <span>{{sdata[((curpage-1)*rewardones)].des}}</span>
+                    </p>
+                  </div>
+
                 </div>
 
                 
-                <div class="photobox_right" style="height:100%;width:50%;">
+                <div class="photobox_right" style="height:100%;width:50%;" v-if="screenwidth>700">
                   <el-image 
                   style="width:calc(100% + 2em);height:20%;position: relative;margin:-2em;left:2em;"
                   class="youthimg"
                   src="./youth.jpg"
                   fit="cover"></el-image>
-                  <div v-for="piece in pageones" style="position: relative;left:5%;width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>0 && curpage<=pagetmp">
+                  <div v-for="piece in pageones" style="position: relative;left:5%;width:95%;height:30%;display: flex;align-items: center;" v-if="curpage>specialtmp && curpage<=pagetmp+specialtmp">
                     <!-- border: 1px solid; -->
                     <!-- {{datas[(curpage-1)*pagesize+piece-1]}} -->
                     
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
-                    v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
-                    :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url+'?imageMogr2/auto-orient'"
+                    v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
+                    v-if="((curpage-1-specialtmp)*pagesize+piece-1+pageones) < totalsize "
+                    :src="somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].url+'?imageMogr2/auto-orient'"
                     :hide-on-click-modal=true
-                    :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
+                    :preview-src-list="[somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
-                    :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '2.5vh'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
+                    :style="{ fontSize:(somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].fontsize : '2.5vh'), }"
+                    v-if="((curpage-1-specialtmp)*pagesize+piece-1+pageones) < totalsize "
                     >
-                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
+                      <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].name}}</span>
                       <br/>
-                      <span>{{somedata[(curpage-1)*pagesize+piece-1+pageones].des}}</span>
+                      <span>{{somedata[(curpage-1-specialtmp)*pagesize+piece-1+pageones].des}}</span>
                       
                     </p>
                   </div>
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp+specialtmp && ((curpage-pagetmp-specialtmp)*rewardones)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg?imageMogr2/auto-orient'"
-                    :preview-src-list="['./scan/'+((curpage-pagetmp)*rewardones)+'.jpg']"
+                    :src="'./scan/'+((curpage-pagetmp-specialtmp)*rewardones)+'.jpg?imageMogr2/auto-orient'"
+                    :preview-src-list="['./scan/'+((curpage-pagetmp-specialtmp)*rewardones)+'.jpg']"
                     :hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
+
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones+1)<special" style="width:95%;height:80%;display: flex;align-items: center;justify-content: center; flex-direction: column;">
+                    <el-image
+                    style="height: 40%;width: 40%; position: relative;"
+                    :src="sdata[((curpage-1)*rewardones+1)].url"
+                    :preview-src-list="[sdata[((curpage-1)*rewardones+1)].url]"
+                    :hide-on-click-modal=true
+                    fit="contain"></el-image>
+                    <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp">
+                      <span style="width:100%;margin-bottom:10px;display: inline-block; text-align: center;">{{sdata[((curpage-1)*rewardones+1)].name}}</span>
+                      <br/>
+                      <span>{{sdata[((curpage-1)*rewardones+1)].des}}</span>
+                    </p>
+                  </div>
+
+
                 </div>
 
 
@@ -145,14 +178,31 @@
             screenwidth:'1080px',
             pagesize:6,
             pageones:3,
-            totalsize:12,
-            pagetmp:4,
-            reward:7,
+            totalsize:12,//totalsize条数
+            pagetmp:4,//reward的起始页
+            specialtmp:2,//totalsize的起始页
+            reward:9,//reward条数
             rewardones:2,
+            special:2,//special的人数
+            specialdata:[
+
+            ],
             curpage:0,
             pagechange:false,
             datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
             des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
+            sdata:[
+              {
+                'name':'李勇 班主任',
+                'url':'./photo/liyong.jpg',
+                'des':'说点什么吧',
+              },
+              {
+                'name':'谭竞搏 辅导员',
+                'url':'./photo/tanjingbo.jpg',
+                'des':'说点什么吧',
+              },
+            ],
             somedata:[
               {
                 'name':'曾睿',
@@ -306,12 +356,14 @@
             this.rewardones=1;
             this.curpage=1;
             this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+            this.specialtmp=Math.ceil(this.special/this.rewardones);
           }
           else 
           {
             this.pagesize=6;
             this.rewardones=2;
             this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+            this.specialtmp=Math.ceil(this.special/this.rewardones);
           }
           this.init();
         },
@@ -324,6 +376,7 @@
                 this.pagesize=3;
                 this.rewardones=1;
                 this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+                this.specialtmp=Math.ceil(this.special/this.rewardones);
                 if(this.curpage==0)this.curpage=1;
               }
               
@@ -332,6 +385,8 @@
                 this.pagesize=6;
                 this.rewardones=2;
                 this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+                this.specialtmp=Math.ceil(this.special/this.rewardones);
+                if(this.curpage>this.specialtmp+this.pagetmp+Math.ceil(this.reward/this.rewardones))this.curpage=this.specialtmp+this.pagetmp+Math.ceil(this.reward/this.rewardones);
               }
               console.log(this.curpage)
           }  
@@ -343,8 +398,10 @@
           {
               this.totalsize=this.somedata.length;
               this.pagetmp=Math.ceil(this.totalsize/this.pagesize);
+              this.specialtmp=Math.ceil(this.special/this.rewardones);
               console.log(this.totalsize);
               console.log(this.pagetmp);
+              console.log(this.specialtmp);
           },
           handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
@@ -353,7 +410,7 @@
           pageadd()
           {
             if(this.pagechange==true)return ;
-            if(this.curpage<this.pagetmp+Math.ceil(this.reward/this.rewardones))
+            if(this.curpage<this.pagetmp+this.specialtmp+Math.ceil(this.reward/this.rewardones))
             {
               
               this.pagechange=true;
