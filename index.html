@@ -9,6 +9,7 @@
     <link rel="icon" href="ico.jpg" type="image/jpg">
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <title>无所不为73分队</title>
   </head>
   <body>
@@ -26,6 +27,7 @@
               <section class="open-book" >
               
               <div class="photobox" style="width:100%;height:100%;position: relative;display: flex;" > 
+              
                 <div class="photobox_left" style="height:100%;width:50%;">
                   <el-image 
                   style="width:calc(100% + 2em);height:20%;position: relative;margin:-2em;"
@@ -40,13 +42,13 @@
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1].pos : '50% 50%'), }"
                     :src="somedata[(curpage-1)*pagesize+piece-1].url"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize && pagechange==false"
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
                     hide-on-click-modal=true
                     object-position="right"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize && pagechange==false"
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '2.5vh') +'!important', }"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
@@ -55,7 +57,7 @@
                     </p>
                   </div>
 
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward && pagechange==false" style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
@@ -64,6 +66,8 @@
                     fit="contain"></el-image>
                   </div>
                 </div>
+
+                
                 <div class="photobox_right" style="height:100%;width:50%;">
                   <el-image 
                   style="width:calc(100% + 2em);height:20%;position: relative;margin:-2em;left:2em;"
@@ -77,14 +81,14 @@
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize && pagechange==false"
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
                     hide-on-click-modal=true
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '2.5vh'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize && pagechange==false"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
                       <br/>
@@ -92,7 +96,7 @@
                       
                     </p>
                   </div>
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward && pagechange==false" style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
@@ -101,6 +105,10 @@
                     fit="contain"></el-image>
                   </div>
                 </div>
+
+
+
+
               </div>
             </section>
             <div style="position: relative; left:20px; border:50%;"  @click="pageadd" class="iii2">
@@ -124,8 +132,8 @@
         </div>
         </div>
     </div>
+    
     <script>
-      
       const App = {
         data() {
           return {
@@ -137,6 +145,7 @@
             reward:7,
             rewardones:2,
             curpage:0,
+            pagechange:false,
             datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
             des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
             somedata:[
@@ -254,14 +263,14 @@
                 'pos':'right',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'李广普',
+                'url':'./photo/liguangpu.jpg',
+                'des':'愿我们都能做一个幸福的人，过充实而有意义的向上的生活，毕业快乐！',
               },
               {
-                'name':'',
-                'url':'',
-                'des':'',
+                'name':'陶云松',
+                'url':'./photo/taoyunsong.jpg',
+                'des':'虽然加入这个集体只有短短一年，但相识便是缘分，愿大家前程似锦，来日方长。',
               },
             ]
           };
@@ -306,6 +315,7 @@
               }
               console.log(this.curpage)
           }  
+          // $watch
         },
 
         methods:{
@@ -322,28 +332,37 @@
           },
           pageadd()
           {
+            if(this.pagechange==true)return ;
             if(this.curpage<this.pagetmp+Math.ceil(this.reward/this.rewardones))
             {
               this.curpage++;
+              this.pagechange=true;
+              $('.photobox_right').css("animation","pageright 1s");
+              setTimeout(()=>
+              {
+                $('.photobox_right').css("animation","");
+                this.pagechange=false;
+              },1000);
             }
             console.log(this.curpage);
           },
           pageminus()
           {
-            if(this.screenwidth<700)
+            if(this.pagechange==true)return ;
+            if((this.screenwidth<700&&this.curpgae>1)||(this.screenwidth>=700&&this.curpage>0))
             {
-              if(this.curpage>1)
-              {
+
                 this.curpage--;
-              }
+                // $('.photobox_left').css("animation","pageleft 1.5s")
+                $('.photobox_left').css("animation","pageleft 1s");
+                setTimeout(()=>
+                {
+                  $('.photobox_left').css("animation","");
+                  this.pagechange=false;
+                },1000);
             }
-            else
-            {
-              if(this.curpage>0)
-              {
-                this.curpage--;
-              }
-            }
+          
+            
             
             console.log(this.curpage);
           }
@@ -354,11 +373,83 @@
       app.mount("#app");
     </script>
   </body>
+
 </html>
 
 
 
 <style>
+@keyframes pageright
+{
+  from 
+  {
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transform: rotateY( 
+      0
+    );
+    opacity: 1;
+  }
+  to
+  {
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transform: rotateY( 
+      -180deg
+    );
+    opacity: 0;
+  }
+}
+@keyframes pageleft
+{
+  from 
+  {
+    transform-style: preserve-3d;
+    transform-origin: right center;
+    transform: rotateY( 
+      0deg
+    );
+    opacity: 1;
+  }
+  to
+  {
+    transform-style: preserve-3d;
+    transform-origin: right center;
+    transform: rotateY( 
+      -180deg
+    );
+    opacity: 0;
+  }
+}
+.photobox_right.active
+{
+  /* transition: 1.5s transform; */
+  animation: pageright 1.5s;
+}  
+.photobox_left.active
+{
+  animation: pageleft 1.5s;
+}
+
+/* .pageleft-leave-active
+{
+  transform-style: preserve-3d;
+  transform-origin: right center;
+  transform: rotateY( 
+    -180deg
+  );
+}
+
+.pageright-leave-active
+{
+  transform-style: preserve-3d;
+    transform-origin: left center;
+    transform: rotateY( 
+      -180deg
+    );
+} */
+
+
 .el-image-viewer__canvas
 {
   position: static !important;
@@ -423,6 +514,7 @@ html,body
   text-align: center;
   top: 20vh;
 }
+
 
 
 body {
