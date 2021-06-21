@@ -18,7 +18,9 @@
 
       <div id="wrapper">
         <div id="container" >
-            <div style="display: flex; align-items: center;" class="wholebox">
+            <div style="display: flex; align-items: center;" class="wholebox"
+              @touchstart='touchstart' @touchend='touchend'
+            >
               <div style="font-size:40px;font-family: 'zhiyong';display: flex;width:40px;position: relative; color: black;" v-show="screenwidth>700" class="word1"
                 :style="{left: (curpage == 0)*22 - (curpage>0)*5 +'vw'}"
                 ><div style="margin-right:10px;">山水总相逢</div><div>未来皆可期</div></div>
@@ -408,7 +410,27 @@
             }
             
             console.log(this.curpage);
+          },
+          touchstart (e) {
+          // 如果你要阻止点击事件，请反注释下一行代码
+            // e.preventDefault()
+            this.startX = e.touches[0].clientX
+            this.startY = e.touches[0].clientY
+          },
+          touchend (e) {
+            this.endX = e.changedTouches[0].clientX;
+            this.endY = e.changedTouches[0].clientY;
+            if (this.startX - this.endX <= -100) { // 右滑触发
+              console.log('r')
+              this.pageadd();
+            }
+            else if(this.startX - this.endX >= 100)
+            {
+              console.log('l')
+              this.pageminus();
+            }
           }
+
         }
       };
       const app = Vue.createApp(App);
