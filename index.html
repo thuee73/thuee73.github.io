@@ -71,13 +71,13 @@
                     fit="contain"></el-image>
                   </div>
 
-                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones)<special" style="width:95%;height:80%;display: flex;align-items: center;justify-content: center; flex-direction: column;">
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones)<special" style="width:95%;height:80%;display: flex;align-items: center; flex-direction: column; top:5%;">
                     <el-image
-                    style="height: 40%;width: 40%; position: relative;"
+                    style="height: 50%;width: 60%; position: relative;"
                     :src="sdata[((curpage-1)*rewardones)].url"
                     :preview-src-list="[sdata[((curpage-1)*rewardones)].url]"
                     :hide-on-click-modal=true
-                    fit="contain"></el-image>
+                    fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp">
                       <span style="width:100%;margin-bottom:10px;display: inline-block; text-align: center;">{{sdata[((curpage-1)*rewardones)].name}}</span>
                       <br/>
@@ -125,13 +125,13 @@
                     fit="contain"></el-image>
                   </div>
 
-                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones+1)<special" style="width:95%;height:80%;display: flex;align-items: center;justify-content: center; flex-direction: column;">
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones+1)<special" style="width:95%;height:80%;display: flex;align-items: center; flex-direction: column;top:5%;">
                     <el-image
-                    style="height: 40%;width: 40%; position: relative;"
+                    style="height: 50%;width: 60%; position: relative;"
                     :src="sdata[((curpage-1)*rewardones+1)].url"
                     :preview-src-list="[sdata[((curpage-1)*rewardones+1)].url]"
                     :hide-on-click-modal=true
-                    fit="contain"></el-image>
+                    fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp">
                       <span style="width:100%;margin-bottom:10px;display: inline-block; text-align: center;">{{sdata[((curpage-1)*rewardones+1)].name}}</span>
                       <br/>
@@ -195,7 +195,7 @@
               {
                 'name':'李勇 班主任',
                 'url':'./photo/liyong.jpg',
-                'des':'说点什么吧',
+                'des':'无所不为的无73，是一个团队的优秀集体，望大家毕业后展翅翱翔，在毕业10年、20年、30年等的班级聚会中再聚一起重叙佳话。',
               },
               {
                 'name':'谭竞搏 辅导员',
