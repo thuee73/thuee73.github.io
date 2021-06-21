@@ -44,7 +44,7 @@
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1].pos : '50% 50%'), }"
-                    :src="somedata[(curpage-1)*pagesize+piece-1].url"
+                    :src="somedata[(curpage-1)*pagesize+piece-1].url+'?imageMogr2/auto-orient'"
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize "
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
                     :hide-on-click-modal=true
@@ -63,7 +63,7 @@
                   <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
+                    :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg?imageMogr2/auto-orient'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg']"
                     :hide-on-click-modal=true
                     fit="contain"></el-image>
@@ -85,7 +85,7 @@
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
                     v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
-                    :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
+                    :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url+'?imageMogr2/auto-orient'"
                     :hide-on-click-modal=true
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
@@ -102,7 +102,7 @@
                   <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
-                    :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
+                    :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg?imageMogr2/auto-orient'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp)*rewardones)+'.jpg']"
                     :hide-on-click-modal=true
                     fit="contain"></el-image>
@@ -286,6 +286,11 @@
                 'name':'欧阳良扬',
                 'url':'./photo/ouyangliangyang.jpg',
                 'des':'祝大家身体健康，为祖国健康工作五十年',
+              },
+              {
+                'name':'荆俊哲',
+                'url':'./photo/jingjunzhe.jpg',
+                'des':'出去以后好好做人，别再回来了'
               }
             ]
           };
@@ -432,12 +437,12 @@
             this.endY = e.changedTouches[0].clientY;
             if (this.startX - this.endX <= -100) { // 右滑触发
               console.log('r')
-              this.pageadd();
+              this.pageminus();
             }
             else if(this.startX - this.endX >= 100)
             {
               console.log('l')
-              this.pageminus();
+              this.pageadd();
             }
           }
 
