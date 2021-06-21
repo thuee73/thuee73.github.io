@@ -42,13 +42,13 @@
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1].pos : '50% 50%'), }"
                     :src="somedata[(curpage-1)*pagesize+piece-1].url"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize && pagechange==false"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize "
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
                     hide-on-click-modal=true
                     object-position="right"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
-                    v-if="((curpage-1)*pagesize+piece-1) < totalsize && pagechange==false"
+                    v-if="((curpage-1)*pagesize+piece-1) < totalsize "
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1].fontsize : '2.5vh') +'!important', }"
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1].name}}</span>
@@ -57,7 +57,7 @@
                     </p>
                   </div>
 
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward && pagechange==false" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp-1)*rewardones+1)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
@@ -81,14 +81,14 @@
                     <el-image
                     style="height: 90%;width: 35%; position: relative;"
                     v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize && pagechange==false"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
                     hide-on-click-modal=true
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
                     :style="{ fontSize:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('fontsize') ? somedata[(curpage-1)*pagesize+piece-1+pageones].fontsize : '2.5vh'), }"
-                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize && pagechange==false"
+                    v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
                     >
                       <span style="width:100%;margin-bottom:5px;display: inline-block;">{{somedata[(curpage-1)*pagesize+piece-1+pageones].name}}</span>
                       <br/>
@@ -96,7 +96,7 @@
                       
                     </p>
                   </div>
-                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward && pagechange==false" style="width:95%;height:80%;display: flex;align-items: center;">
+                  <div v-if="curpage>pagetmp && ((curpage-pagetmp)*rewardones)<=reward " style="width:95%;height:80%;display: flex;align-items: center;">
                     <el-image
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
@@ -134,6 +134,8 @@
     </div>
     
     <script>
+      const { defineComponent, h } = Vue
+      const { ElMessage } = ElementPlus
       const App = {
         data() {
           return {
@@ -335,34 +337,74 @@
             if(this.pagechange==true)return ;
             if(this.curpage<this.pagetmp+Math.ceil(this.reward/this.rewardones))
             {
-              this.curpage++;
+              
               this.pagechange=true;
-              $('.photobox_right').css("animation","pageright 1s");
-              setTimeout(()=>
+              if(this.screenwidth<700)
               {
-                $('.photobox_right').css("animation","");
-                this.pagechange=false;
-              },1000);
+           
+                $('.photobox_left').css("animation","pageright 1s");
+                setTimeout(()=>
+                {
+                  $('.photobox_left').css("animation","");
+                  this.curpage++;
+                  this.pagechange=false;
+                },1000);
+              }
+              else
+              {
+                $('.photobox_right').css("animation","pageright 1s");
+                $('.photobox_left').css("animation","pagestay 1s");
+                setTimeout(()=>
+                {
+                  $('.photobox_right').css("animation","");
+                  $('.photobox_left').css("animation","");
+                  this.curpage++;
+                  this.pagechange=false;
+                },1000);
+              }
+              
+            }
+            else
+            {
+              ElMessage('已经到底了哦~');
             }
             console.log(this.curpage);
           },
           pageminus()
           {
             if(this.pagechange==true)return ;
-            if((this.screenwidth<700&&this.curpgae>1)||(this.screenwidth>=700&&this.curpage>0))
-            {
-
-                this.curpage--;
+            if((this.screenwidth<700&&this.curpage>1)||(this.screenwidth>=700&&this.curpage>0))
+            {            
+                this.pagechange=true;
                 // $('.photobox_left').css("animation","pageleft 1.5s")
-                $('.photobox_left').css("animation","pageleft 1s");
-                setTimeout(()=>
+                if(this.screenwidth<700)
                 {
-                  $('.photobox_left').css("animation","");
-                  this.pagechange=false;
-                },1000);
+                  $('.photobox_left').css("animation","pageleft 1s");
+                  setTimeout(()=>
+                  {
+                    $('.photobox_left').css("animation","");
+                    this.curpage--;
+                    this.pagechange=false;
+                  },1000);
+                }
+                else
+                {
+                  $('.photobox_left').css("animation","pageleft 1s");
+                  $('.photobox_right').css("animation","pagestay 1s");
+                  setTimeout(()=>
+                  {
+                    $('.photobox_left').css("animation","");
+                    $('.photobox_right').css("animation","");
+                    this.curpage--;
+                    this.pagechange=false;
+                  },1000);
+                }
+                
             }
-          
-            
+            else
+            {
+              ElMessage('已经是封面了哦~');
+            }
             
             console.log(this.curpage);
           }
@@ -400,6 +442,17 @@
     opacity: 0;
   }
 }
+@keyframes pagestay
+{
+  from 
+  {
+    opacity: 1;
+  }
+  to
+  {
+    opacity: 0;
+  }
+}
 @keyframes pageleft
 {
   from 
@@ -421,15 +474,16 @@
     opacity: 0;
   }
 }
-.photobox_right.active
+
+/* .photobox_right.active
 {
-  /* transition: 1.5s transform; */
+  
   animation: pageright 1.5s;
 }  
 .photobox_left.active
 {
   animation: pageleft 1.5s;
-}
+} */
 
 /* .pageleft-leave-active
 {
