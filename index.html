@@ -47,7 +47,7 @@
                     :src="somedata[(curpage-1)*pagesize+piece-1].url"
                     v-if="((curpage-1)*pagesize+piece-1) < totalsize "
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1].url]"
-                    hide-on-click-modal=true
+                    :hide-on-click-modal=true
                     object-position="right"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
@@ -65,7 +65,7 @@
                     style="height: 100%;width: 100%; position: relative;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp-1)*rewardones+1)+'.jpg']"
-                    hide-on-click-modal=true
+                    :hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
                     v-bind:style="{order:(piece-1+pageones)%2, objectPosition:(somedata[(curpage-1)*pagesize+piece-1+pageones].hasOwnProperty('pos') ? somedata[(curpage-1)*pagesize+piece-1+pageones].pos : '50% 50%'), }"
                     v-if="((curpage-1)*pagesize+piece-1+pageones) < totalsize "
                     :src="somedata[(curpage-1)*pagesize+piece-1+pageones].url"
-                    hide-on-click-modal=true
+                    :hide-on-click-modal=true
                     :preview-src-list="[somedata[(curpage-1)*pagesize+piece-1+pageones].url]"
                     fit="cover"></el-image>
                     <p style="padding:20px;width:65%;font-family:'muyao';font-size:2.5vh;" class="ppp"
@@ -104,7 +104,7 @@
                     style="height: 100%;width: 100%; position: relative;left:5%;top:5%;"
                     :src="'./scan/'+((curpage-pagetmp)*rewardones)+'.jpg'"
                     :preview-src-list="['./scan/'+((curpage-pagetmp)*rewardones)+'.jpg']"
-                    hide-on-click-modal=true
+                    :hide-on-click-modal=true
                     fit="contain"></el-image>
                   </div>
                 </div>
@@ -276,6 +276,11 @@
                 'name':'陶云松',
                 'url':'./photo/taoyunsong.jpg',
                 'des':'虽然加入这个集体只有短短一年，但相识便是缘分，愿大家前程似锦，来日方长。',
+              },
+              {
+                'name':'任雨鑫',
+                'url':'./photo/renyuxin.jpg',
+                'des':'祝大家永远年轻，永远能够追求自己想要的事物，永不停息！',
               },
             ]
           };
