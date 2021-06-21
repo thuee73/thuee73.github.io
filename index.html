@@ -115,7 +115,7 @@
               <i :class="screenwidth>700?'el-icon-d-arrow-right':'el-icon-arrow-down'" style="font-size:80px;" class="iii"></i>
             </div>
             <div style="font-size:40px;font-family: 'zhiyong';display: flex;width:40px;position: relative; color: black;" v-show="screenwidth>700" class="word2"
-              :style="{right: (curpage == 0)*24 - (curpage>0)*2 +'vw'}"
+              :style="{right: (curpage == 0)*26 + (curpage>0)*0 +'vw'}"
               ><div style="margin-left:10px;">曲终人未散</div><div>人散曲未终</div></div>
             
             </div>
@@ -587,7 +587,7 @@ body {
 #container {
     float: left;
     padding: 1em;
-    width: 100%;
+    /* width: 100%; */
     
 }
 
