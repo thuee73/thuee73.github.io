@@ -71,9 +71,9 @@
                     fit="contain"></el-image>
                   </div>
 
-                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones)<special" style="width:95%;height:80%;display: flex;align-items: center; flex-direction: column; top:5%;">
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones)<special" style="width:100%;height:80%;display: flex;align-items: center; flex-direction: column; top:5%;right:1em;" class="specials">
                     <el-image
-                    style="height: 50%;width: 60%; position: relative;"
+                    style="height: 60%;width: 80%; position: relative;"
                     :src="sdata[((curpage-1)*rewardones)].url"
                     :preview-src-list="[sdata[((curpage-1)*rewardones)].url]"
                     :hide-on-click-modal=true
@@ -125,9 +125,9 @@
                     fit="contain"></el-image>
                   </div>
 
-                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones+1)<special" style="width:95%;height:80%;display: flex;align-items: center; flex-direction: column;top:5%;">
+                  <div v-if="curpage>0 && curpage<=specialtmp && ((curpage-1)*rewardones+1)<special" style="width:100%;height:80%;display: flex;align-items: center; flex-direction: column;top:5%;left:1em;" class="specials">
                     <el-image
-                    style="height: 50%;width: 60%; position: relative;"
+                    style="height: 60%;width: 80%; position: relative;"
                     :src="sdata[((curpage-1)*rewardones+1)].url"
                     :preview-src-list="[sdata[((curpage-1)*rewardones+1)].url]"
                     :hide-on-click-modal=true
@@ -183,7 +183,7 @@
             specialtmp:2,//totalsize的起始页
             reward:9,//reward条数
             rewardones:2,
-            special:2,//special的人数
+            special:8,//special的人数
             specialdata:[
 
             ],
@@ -202,6 +202,36 @@
                 'url':'./photo/tanjingbo.jpg',
                 'des':'说点什么吧',
               },
+              {
+                'name':'学期末聚餐',
+                'url':'./group/1.jpg',
+                'des':'',
+              },
+              {
+                'name':'甲团活动',
+                'url':'./group/2.jpg',
+                'des':'',
+              },
+              {
+                'name':'紫操熄灯夜',
+                'url':'./group/3.jpg',
+                'des':'',
+              },
+              {
+                'name':'紫操熄灯夜',
+                'url':'./group/4.jpg',
+                'des':'',
+              },
+              {
+                'name':'毕业轰趴',
+                'url':'./group/5.jpg',
+                'des':'',
+              },
+              {
+                'name':'班级合照',
+                'url':'./group/6.jpg',
+                'des':'',
+              }
             ],
             somedata:[
               {
@@ -341,6 +371,11 @@
                 'name':'荆俊哲',
                 'url':'./photo/jingjunzhe.jpg',
                 'des':'出去以后好好做人，别再回来了'
+              },
+              {
+                'name':'贺咏佳',
+                'url':'./photo/heyongjia.jpg',
+                'des':'祝大家头发茂密身体健康',
               }
             ]
           };
@@ -789,6 +824,11 @@ body {
   .youthimg
   {
     width:calc(100% + 4em) !important;
+  }
+  .specials
+  {
+    left:0 !important;
+    right:0 !important;
   }
 }
 
