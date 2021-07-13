@@ -190,6 +190,7 @@
             curpage:0,
             pagechange:false,
             datas:['./3.jpg',1,1,1,1,1,2,2,2,2,2,2],
+            dirs:'https://cdn.jsdelivr.net/gh/thuee73/thuee73.github.io@main/',
             des:['祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦','祝大家前程似锦，都有光明的未来。以后都带带我呀。啦啦啦啦啦啦啦啦',1,1,2,2,2,2,2,2],
             sdata:[
               {
@@ -403,7 +404,16 @@
         },
         created:function()
         {
-          
+          for(let i=0;i<this.sdata.length;i++)
+          {
+            this.sdata[i].url=this.dirs+this.sdata[i].url;
+          }
+
+          for(let i=0;i<this.somedata.length;i++)
+          {
+            this.somedata[i].url=this.dirs+this.somedata[i].url;
+          }
+
           this.screenwidth=window.innerWidth;
           console.log(this.screenwidth)
           if(this.screenwidth<700)
