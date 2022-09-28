@@ -10,6 +10,7 @@
     <link rel="icon" href="ico.jpg" type="image/jpg">
     <!-- import JavaScript -->
     <script src="https://unpkg.com/element-plus"></script>
+    <script src="//unpkg.com/@element-plus/icons-vue"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js" integrity="sha512-xsoiisGNT6Dw2Le1Cocn5305Uje1pOYeSzrpO3RD9K+JTpVH9KqSXksXqur8cobTEKJcFz0COYq4723mzo88/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <title>无所不为73分队</title>
@@ -26,7 +27,9 @@
                 :style="{left: (curpage == 0)*22 - (curpage>0)*5 +'vw'}"
                 ><div style="margin-right:10px;">山水总相逢</div><div>未来皆可期</div></div>
               <div style="position: relative; right:20px; border:50%;"  @click="pageminus" class="iii1">
-                <i :class="screenwidth>700?'el-icon-d-arrow-left':'el-icon-arrow-up'" style="font-size:80px;" class="iii"></i>
+<!--                 <i :class="screenwidth>700?'el-icon-d-arrow-left':'el-icon-arrow-up'" style="font-size:80px;" class="iii"></i> -->
+                <el-icon v-show="screenwidth>700" style="font-size:80px;" class="iii"><DArrowLeft /></el-icon>
+                <el-icon v-show="screenwidth<700" style="font-size:80px;" class="iii"><ArrowUp /></el-icon>
               </div>
               <section class="open-book" >
               
@@ -148,7 +151,9 @@
               </div>
             </section>
             <div style="position: relative; left:20px; border:50%;"  @click="pageadd" class="iii2">
-              <i :class="screenwidth>700?'el-icon-d-arrow-right':'el-icon-arrow-down'" style="font-size:80px;" class="iii"></i>
+<!--               <i :class="screenwidth>700?'el-icon-d-arrow-right':'el-icon-arrow-down'" style="font-size:80px;" class="iii"></i> -->
+              <el-icon v-show="screenwidth>700" style="font-size:80px;" class="iii"><DArrowRight /></el-icon>
+              <el-icon v-show="screenwidth<=700" style="font-size:80px;" class="iii"><ArrowDown /></el-icon>
             </div>
             <div style="font-size:40px;font-family: 'zhiyong';display: flex;width:40px;position: relative; color: black;" v-show="screenwidth>700" class="word2"
               :style="{right: (curpage == 0)*26 + (curpage>0)*0 +'vw'}"
